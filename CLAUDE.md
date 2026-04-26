@@ -48,15 +48,23 @@ labs/000-lab-name/
     screenshots/
     logs/
 
+## Reference files
+
+Before creating or reviewing any lab, read these files from the repo:
+
+- shared/ip-plan.md — lab IP addresses and network layout for all devices
+- shared/hardware-inventory.md — available physical and virtual hardware and their roles
+- shared/common-commands.md — standard commands used across labs
+- shared/credentials.example.md — placeholder credential format, never store real secrets
+- templates/lab-template/ — the required structure every lab must follow
+
 ## Agent coordination
 
-Use the agent-handoff folder for coordination.
-
-Claude Code may write:
-agent-handoff/claude-to-codex.md
-
-Claude Code should read:
+Before starting any task, read:
 agent-handoff/codex-to-claude.md
+
+After completing a review, update:
+agent-handoff/claude-to-codex.md
 
 Use GitHub issues and PR comments as the primary multi-agent coordination system.
 

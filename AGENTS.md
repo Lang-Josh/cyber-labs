@@ -63,15 +63,23 @@ Use this naming style:
 004-dvwa-sql-injection
 005-wazuh-detection
 
+## Reference files
+
+Before creating any lab, read these files from the repo:
+
+- shared/ip-plan.md — lab IP addresses and network layout for all devices
+- shared/hardware-inventory.md — available physical and virtual hardware and their roles
+- shared/common-commands.md — standard commands used across labs
+- shared/credentials.example.md — placeholder credential format, never store real secrets
+- templates/lab-template/ — the required structure every lab must follow
+
 ## Agent coordination
 
-Use the agent-handoff folder for coordination.
-
-Codex may write:
-agent-handoff/codex-to-claude.md
-
-Codex should read:
+Before starting any task, read:
 agent-handoff/claude-to-codex.md
+
+After completing work, update:
+agent-handoff/codex-to-claude.md
 
 Use GitHub issues and PR comments as the primary multi-agent coordination system.
 
