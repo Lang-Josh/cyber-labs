@@ -1,0 +1,40 @@
+name: Lab Check
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  structure:
+    name: Lab structure validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check lab structure
+        run: python3 scripts/check-lab-structure.py
+
+  shellcheck:
+    name: Shell script validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: sudo apt-get install -y shellcheck
+
+      - name: Run shellcheck on all scripts
+        run: |
+          find scripts/ -name "*.sh" | while read f; do
+            echo "Checking $f"
+            shellcheck "$f"
+          done
+
+  secrets:
+    name: Secret scanning
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Scan for secrets
+        run: python3 scripts/scan-secrets.py
