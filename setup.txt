@@ -1,0 +1,1454 @@
+setup.txt
+Cyber Lab Repo + Codex + Claude Code Setup Plan
+
+Goal
+Create a GitHub-backed cyber lab repository that both Codex and Claude Code can use to:
+- Create lab directories
+- Pull shared templates
+- Write lab setup guides
+- Store hardware requirements
+- Store config files
+- Store expected outputs
+- Store actual results
+- Open issues and pull requests
+- Review each other's work through GitHub
+
+Important reality check
+Codex and Claude Code should not directly control each other.
+
+The reliable workflow is:
+- GitHub repo is the shared source of truth
+- Codex writes files, branches, commits, and PRs
+- Claude Code reads those files, reviews them, edits them, and comments through GitHub
+- They coordinate through issues, PR comments, branch names, and repo instructions
+
+Do not use either agent to directly configure live lab machines until you explicitly decide to allow that later.
+
+
+PART 1 - Create the GitHub repository
+
+1. Open GitHub in your browser.
+
+2. Click the plus button in the top right.
+
+3. Click New repository.
+
+4. Repository name:
+cyber-labs
+
+5. Description:
+Personal cybersecurity lab repo for reproducible attack, defense, SOC, and sandbox training labs.
+
+6. Visibility:
+Private
+
+7. Check:
+Add a README file
+
+8. Do not add a .gitignore yet unless you want one.
+
+9. Click Create repository.
+
+
+PART 2 - Clone the repo locally
+
+1. Open Terminal on your Mac.
+
+2. Go to the folder where you keep projects:
+cd ~/Developer
+
+If that folder does not exist:
+mkdir -p ~/Developer
+cd ~/Developer
+
+3. Clone the repo:
+git clone https://github.com/YOUR_GITHUB_USERNAME/cyber-labs.git
+
+4. Enter the repo:
+cd cyber-labs
+
+5. Confirm Git works:
+git status
+
+
+PART 3 - Create the base repo structure
+
+From inside the cyber-labs folder, run:
+
+mkdir -p labs
+mkdir -p templates/lab-template
+mkdir -p shared
+mkdir -p shared/ansible
+mkdir -p shared/docker
+mkdir -p shared/configs
+mkdir -p shared/topologies
+mkdir -p scripts
+mkdir -p detections/wazuh
+mkdir -p detections/sigma
+mkdir -p detections/sysmon
+mkdir -p diagrams
+mkdir -p results
+mkdir -p agent-handoff
+mkdir -p .codex
+mkdir -p .github/pull_request_template
+mkdir -p .github/ISSUE_TEMPLATE
+
+
+PART 4 - Add the required root files
+
+Run:
+
+touch AGENTS.md
+touch CLAUDE.md
+touch README.md
+touch shared/ip-plan.md
+touch shared/hardware-inventory.md
+touch shared/common-commands.md
+touch shared/credentials.example.md
+touch shared/troubleshooting.md
+touch scripts/deploy-lab.sh
+touch scripts/reset-lab.sh
+touch scripts/collect-evidence.sh
+touch .codex/notes.md
+touch agent-handoff/codex-to-claude.md
+touch agent-handoff/claude-to-codex.md
+
+Make scripts executable:
+chmod +x scripts/*.sh
+
+
+PART 5 - Create the lab template files
+
+Run:
+
+touch templates/lab-template/README.md
+touch templates/lab-template/objectives.md
+touch templates/lab-template/hardware.md
+touch templates/lab-template/topology.md
+touch templates/lab-template/setup.md
+touch templates/lab-template/instructions.md
+touch templates/lab-template/expected-output.md
+touch templates/lab-template/results.md
+touch templates/lab-template/cleanup.md
+touch templates/lab-template/lessons-learned.md
+mkdir -p templates/lab-template/configs
+mkdir -p templates/lab-template/results/screenshots
+mkdir -p templates/lab-template/results/logs
+
+
+PART 6 - Put this in README.md
+
+Open README.md:
+nano README.md
+
+Paste:
+
+# Cyber Labs
+
+This repo stores reproducible cybersecurity labs for attack practice, SOC practice, detection engineering, and sandboxed network training.
+
+## Repo purpose
+
+Each lab should include:
+- Goal
+- Difficulty
+- Hardware required
+- Network topology
+- Setup steps
+- Commands to run
+- Expected outputs
+- Results
+- Cleanup steps
+- What was learned
+
+## Main folders
+
+- labs/ - Finished or in-progress labs
+- templates/ - Reusable lab templates
+- shared/ - Common IP plans, hardware inventory, commands, and troubleshooting
+- scripts/ - Deploy, reset, and evidence collection scripts
+- detections/ - Wazuh, Sigma, Sysmon, and detection content
+- diagrams/ - Network and lab diagrams
+- agent-handoff/ - Notes used by Codex and Claude Code to coordinate work
+
+
+PART 7 - Put this in AGENTS.md for Codex
+
+Open AGENTS.md:
+nano AGENTS.md
+
+Paste:
+
+# AGENTS.md
+
+## Role
+
+This repository is a personal cybersecurity lab knowledge base. Codex should help create, organize, and maintain reproducible lab files.
+
+## Primary responsibilities
+
+Codex may:
+- Create lab directories
+- Fill in lab template files
+- Write setup instructions
+- Write hardware lists
+- Write topology documentation
+- Write expected output files
+- Write result summaries
+- Create config files
+- Create scripts
+- Create GitHub issues
+- Create branches
+- Open pull requests
+- Update documentation
+
+## Hard rules
+
+- Do not modify live lab machines.
+- Do not SSH into real devices unless explicitly instructed.
+- Do not assume hidden local state.
+- All work must be reproducible from committed files.
+- Prefer documentation, templates, scripts, and infrastructure-as-code.
+- Do not store real passwords, API keys, tokens, private keys, or personal secrets.
+- Use credentials.example.md for placeholder credentials only.
+- Keep each lab self-contained.
+- Keep instructions granular and beginner-friendly.
+- Every lab must include setup, tasks, expected output, cleanup, and learning objectives.
+
+## Required lab structure
+
+Each lab should use this structure:
+
+labs/000-lab-name/
+  README.md
+  objectives.md
+  hardware.md
+  topology.md
+  setup.md
+  instructions.md
+  expected-output.md
+  results.md
+  cleanup.md
+  lessons-learned.md
+  configs/
+  results/
+    screenshots/
+    logs/
+
+## Naming
+
+Use this naming style:
+001-network-discovery
+002-service-enumeration
+003-ssh-bruteforce
+004-dvwa-sql-injection
+005-wazuh-detection
+
+## Agent coordination
+
+Use the agent-handoff folder for coordination.
+
+Codex may write:
+agent-handoff/codex-to-claude.md
+
+Codex should read:
+agent-handoff/claude-to-codex.md
+
+Use GitHub issues and PR comments as the primary multi-agent coordination system.
+
+## Safety
+
+This repo is for owned, sandboxed systems only. Do not provide instructions that target third-party networks or systems.
+
+
+PART 8 - Put this in CLAUDE.md for Claude Code
+
+Open CLAUDE.md:
+nano CLAUDE.md
+
+Paste:
+
+# CLAUDE.md
+
+## Role
+
+This repository is a personal cybersecurity lab knowledge base. Claude Code should help review, refine, and maintain reproducible lab files.
+
+## Primary responsibilities
+
+Claude Code may:
+- Review lab setup instructions
+- Improve clarity and correctness
+- Check whether expected outputs match tasks
+- Create or revise lab documentation
+- Create or revise config files
+- Create or revise detection logic
+- Review Codex-generated pull requests
+- Add missing cleanup steps
+- Add troubleshooting notes
+- Suggest safer lab boundaries
+
+## Hard rules
+
+- Do not modify live lab machines.
+- Do not SSH into real devices unless explicitly instructed.
+- Do not assume hidden local state.
+- All lab work must be reproducible from committed files.
+- Do not store real passwords, API keys, tokens, private keys, or personal secrets.
+- Keep lab docs concise, direct, and actionable.
+- Every lab must include setup, tasks, expected output, cleanup, and learning objectives.
+
+## Required lab structure
+
+Each lab should use this structure:
+
+labs/000-lab-name/
+  README.md
+  objectives.md
+  hardware.md
+  topology.md
+  setup.md
+  instructions.md
+  expected-output.md
+  results.md
+  cleanup.md
+  lessons-learned.md
+  configs/
+  results/
+    screenshots/
+    logs/
+
+## Agent coordination
+
+Use the agent-handoff folder for coordination.
+
+Claude Code may write:
+agent-handoff/claude-to-codex.md
+
+Claude Code should read:
+agent-handoff/codex-to-claude.md
+
+Use GitHub issues and PR comments as the primary multi-agent coordination system.
+
+## Review style
+
+When reviewing another agent's work:
+- Check reproducibility
+- Check missing steps
+- Check command correctness
+- Check security boundaries
+- Check whether expected outputs are realistic
+- Leave concrete changes, not vague feedback
+
+## Safety
+
+This repo is for owned, sandboxed systems only. Do not provide instructions that target third-party networks or systems.
+
+
+PART 9 - Fill the lab template
+
+Open templates/lab-template/README.md:
+nano templates/lab-template/README.md
+
+Paste:
+
+# Lab Name
+
+## Difficulty
+
+Level X
+
+## Goal
+
+Describe what this lab teaches.
+
+## Lab summary
+
+Briefly describe what the user will build, attack, defend, or observe.
+
+## Files in this lab
+
+- objectives.md
+- hardware.md
+- topology.md
+- setup.md
+- instructions.md
+- expected-output.md
+- results.md
+- cleanup.md
+- lessons-learned.md
+- configs/
+- results/
+
+Open templates/lab-template/objectives.md:
+nano templates/lab-template/objectives.md
+
+Paste:
+
+# Objectives
+
+By the end of this lab, you should be able to:
+
+- Objective 1
+- Objective 2
+- Objective 3
+
+Open templates/lab-template/hardware.md:
+nano templates/lab-template/hardware.md
+
+Paste:
+
+# Hardware Required
+
+## Required
+
+- Mac
+- Kali Linux VM
+- Raspberry Pi or VM target
+- Network connectivity
+
+## Optional
+
+- Managed switch
+- pfSense or OPNsense box
+- Windows VM
+- Wazuh server
+
+Open templates/lab-template/topology.md:
+nano templates/lab-template/topology.md
+
+Paste:
+
+# Network Topology
+
+## Devices
+
+| Device | Role | IP Address | Notes |
+|---|---|---|---|
+| Kali | Attacker | TBD | Runs scan or attack tools |
+| Target | Victim | TBD | Receives traffic |
+| SIEM | Detection | TBD | Optional |
+
+## Diagram
+
+```mermaid
+flowchart LR
+  Kali[Kali Attacker] --> Switch[Lab Switch]
+  Switch --> Target[Target Host]
+  Target --> SIEM[SIEM Optional]
+```
+
+Open templates/lab-template/setup.md:
+nano templates/lab-template/setup.md
+
+Paste:
+
+# Setup
+
+## Pre-checks
+
+- Confirm devices are powered on.
+- Confirm all devices are on the lab network.
+- Confirm you are only testing owned lab systems.
+
+## Steps
+
+1. Step one.
+2. Step two.
+3. Step three.
+
+Open templates/lab-template/instructions.md:
+nano templates/lab-template/instructions.md
+
+Paste:
+
+# Instructions
+
+## Task 1
+
+Command:
+```bash
+COMMAND_HERE
+```
+
+Expected behavior:
+Describe what should happen.
+
+## Task 2
+
+Command:
+```bash
+COMMAND_HERE
+```
+
+Expected behavior:
+Describe what should happen.
+
+Open templates/lab-template/expected-output.md:
+nano templates/lab-template/expected-output.md
+
+Paste:
+
+# Expected Output
+
+## Command outputs
+
+Paste expected command output examples here.
+
+## Logs
+
+Paste expected log examples here.
+
+## Detection output
+
+Paste expected SIEM, IDS, or event output here.
+
+Open templates/lab-template/results.md:
+nano templates/lab-template/results.md
+
+Paste:
+
+# Results
+
+## Date
+
+YYYY-MM-DD
+
+## Environment
+
+- Attacker:
+- Target:
+- Network:
+- Tools used:
+
+## Actual outputs
+
+Paste actual command outputs here.
+
+## Screenshots
+
+Store screenshots in:
+results/screenshots/
+
+## Logs
+
+Store logs in:
+results/logs/
+
+Open templates/lab-template/cleanup.md:
+nano templates/lab-template/cleanup.md
+
+Paste:
+
+# Cleanup
+
+## Steps
+
+1. Stop services.
+2. Remove temporary files.
+3. Reset configs if needed.
+4. Confirm the lab is back to baseline.
+
+Open templates/lab-template/lessons-learned.md:
+nano templates/lab-template/lessons-learned.md
+
+Paste:
+
+# Lessons Learned
+
+## What worked
+
+- Item
+
+## What failed
+
+- Item
+
+## What to improve
+
+- Item
+
+## Concepts reinforced
+
+- Item
+
+
+PART 10 - Add your starting IP plan
+
+Open shared/ip-plan.md:
+nano shared/ip-plan.md
+
+Paste:
+
+# IP Plan
+
+## Current simple lab
+
+| Network | Purpose | CIDR |
+|---|---|---|
+| Lab network | Basic sandbox | 192.168.50.0/24 |
+
+## Future segmented lab
+
+| Network | Purpose | CIDR | Gateway |
+|---|---|---|---|
+| Attacker | Kali and attack tooling | 192.168.50.0/24 | 192.168.50.1 |
+| Internal | Client and target hosts | 192.168.60.0/24 | 192.168.60.1 |
+| Servers | SIEM, AD, logging, vulnerable services | 192.168.70.0/24 | 192.168.70.1 |
+| IoT | ESP8266 and IoT devices | 192.168.80.0/24 | 192.168.80.1 |
+
+## Reserved addresses
+
+| Device | Role | IP |
+|---|---|---|
+| pfSense or OPNsense | Router and firewall | 192.168.50.1 |
+| Kali VM | Attacker | 192.168.50.10 |
+| Mac host | Admin workstation | 192.168.50.20 |
+| Raspberry Pi 1 | Linux target | 192.168.60.10 |
+| Windows client | Endpoint | 192.168.60.20 |
+| Wazuh | SIEM | 192.168.70.10 |
+| Windows Server | Domain Controller | 192.168.70.20 |
+| ESP8266 | IoT target | 192.168.80.10 |
+
+
+PART 11 - Add hardware inventory
+
+Open shared/hardware-inventory.md:
+nano shared/hardware-inventory.md
+
+Paste:
+
+# Hardware Inventory
+
+## Current hardware
+
+- Mac running macOS
+- Kali Linux VM on Mac
+- Raspberry Pi 5 8GB
+- Raspberry Pi power supply
+- Raspberry Pi case and active cooler
+- MicroSD card and reader
+- Ethernet switch
+- Ethernet cables
+- Alfa USB WiFi adapter
+- ESP8266 boards
+- Dupont wires
+
+## Planned upgrades
+
+- Managed switch
+- Mini PC for always-on lab services
+- pfSense or OPNsense firewall box
+- External SSD for VM snapshots and logs
+
+## Lab roles
+
+| Hardware | Role |
+|---|---|
+| Mac | Admin workstation and Kali host |
+| Kali VM | Attacker |
+| Raspberry Pi | Linux target |
+| Mini PC | VM host, SIEM, AD, vulnerable targets |
+| Managed switch | VLANs and port mirroring |
+| pfSense or OPNsense box | Firewall, routing, segmentation |
+| Alfa adapter | Wireless labs |
+| ESP8266 | IoT labs |
+
+
+PART 12 - Add common commands
+
+Open shared/common-commands.md:
+nano shared/common-commands.md
+
+Paste:
+
+# Common Commands
+
+## Git
+
+```bash
+git status
+git checkout -b branch-name
+git add .
+git commit -m "message"
+git push -u origin branch-name
+```
+
+## Network checks
+
+```bash
+ip addr
+ifconfig
+ping TARGET_IP
+traceroute TARGET_IP
+```
+
+## Nmap
+
+```bash
+nmap -sn 192.168.50.0/24
+nmap -sV TARGET_IP
+nmap -p- TARGET_IP
+```
+
+## Logs
+
+```bash
+sudo tail -f /var/log/auth.log
+sudo tail -f /var/log/syslog
+sudo tail -f /var/log/apache2/access.log
+```
+
+
+PART 13 - Add placeholder credentials file
+
+Open shared/credentials.example.md:
+nano shared/credentials.example.md
+
+Paste:
+
+# Credentials Example
+
+Do not store real passwords in this repo.
+
+Use placeholders only.
+
+| System | Username | Password |
+|---|---|---|
+| Linux target | labuser | CHANGE_ME |
+| DVWA | admin | CHANGE_ME |
+| Windows client | labuser | CHANGE_ME |
+| Wazuh | admin | CHANGE_ME |
+
+
+PART 14 - Add first empty lab
+
+Run:
+
+mkdir -p labs/001-network-discovery
+cp -R templates/lab-template/* labs/001-network-discovery/
+
+Open labs/001-network-discovery/README.md:
+nano labs/001-network-discovery/README.md
+
+Change the title to:
+# 001 - Network Discovery
+
+Set difficulty:
+Level 1
+
+Set goal:
+Learn how to discover hosts on a sandboxed lab network using Kali and basic network scanning tools.
+
+
+PART 15 - Commit and push the starter repo
+
+Run:
+
+git add .
+git commit -m "Initial cyber lab repo structure"
+git push origin main
+
+
+PART 16 - Create a GitHub Personal Access Token
+
+Use a fine-grained personal access token if possible.
+
+1. Go to GitHub.
+2. Click your profile picture.
+3. Go to Settings.
+4. Go to Developer settings.
+5. Go to Personal access tokens.
+6. Choose Fine-grained tokens.
+7. Click Generate new token.
+8. Name it:
+cyber-labs-agent-token
+
+9. Repository access:
+Only select the cyber-labs repository.
+
+10. Permissions:
+Set the minimum useful permissions:
+- Contents: Read and write
+- Issues: Read and write
+- Pull requests: Read and write
+- Metadata: Read-only
+
+11. Generate the token.
+
+12. Copy it once and store it somewhere safe.
+
+Do not commit the token to the repo.
+
+
+PART 17 - Store the GitHub token locally
+
+On your Mac, use an environment variable.
+
+Open your shell profile.
+
+If you use zsh:
+nano ~/.zshrc
+
+Add:
+
+export GITHUB_PAT="paste_your_token_here"
+
+Save and reload:
+source ~/.zshrc
+
+Confirm it exists:
+echo $GITHUB_PAT
+
+If it prints the token, the variable is loaded.
+
+Do not paste that output anywhere public.
+
+
+PART 18 - Install GitHub CLI as a backup path
+
+This is useful even if MCP is configured.
+
+Install GitHub CLI:
+brew install gh
+
+Authenticate:
+gh auth login
+
+Choose:
+- GitHub.com
+- HTTPS
+- Login with browser
+
+Test:
+gh repo view YOUR_GITHUB_USERNAME/cyber-labs
+
+
+PART 19 - Install Codex CLI
+
+Use the current OpenAI Codex CLI installation path from OpenAI documentation.
+
+Typical setup:
+
+npm install -g @openai/codex
+
+Then authenticate:
+
+codex login
+
+Confirm Codex works:
+codex --version
+
+From inside your repo:
+cd ~/Developer/cyber-labs
+codex "Summarize this repo structure and list the instruction files you loaded."
+
+
+PART 20 - Configure Codex to use the repo instructions
+
+Codex reads AGENTS.md from the repo.
+
+Test it:
+
+cd ~/Developer/cyber-labs
+codex "Read AGENTS.md and tell me the repo rules in 10 bullets."
+
+Expected result:
+Codex should mention:
+- No live device modification
+- Use lab templates
+- Keep work reproducible
+- Do not store real secrets
+- Use agent-handoff for coordination
+
+
+PART 21 - Configure Codex MCP for GitHub
+
+Codex MCP configuration is normally stored in your Codex config file.
+
+Create the config folder:
+mkdir -p ~/.codex
+
+Open the config:
+nano ~/.codex/config.toml
+
+Add a GitHub MCP server entry.
+
+Use this general pattern:
+
+[mcp_servers.github]
+command = "docker"
+args = ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "-e", "GITHUB_TOOLSETS=repos,issues,pull_requests", "ghcr.io/github/github-mcp-server"]
+env = { GITHUB_PERSONAL_ACCESS_TOKEN = "${GITHUB_PAT}" }
+
+Save the file.
+
+Notes:
+- This uses the official GitHub MCP server container.
+- It limits toolsets to repo, issue, and pull request work.
+- If variable expansion does not work in your Codex version, replace "${GITHUB_PAT}" with your token locally, but never commit that config file.
+
+
+PART 22 - Test Codex GitHub MCP
+
+From the repo:
+
+codex "Using GitHub tools if available, list the open issues for this repository. If GitHub tools are not available, say so."
+
+Then ask:
+
+codex "Create a GitHub issue titled 'Create lab 002 service enumeration' with a short checklist for building the lab. Do not modify live systems."
+
+Go to GitHub and confirm the issue exists.
+
+If it fails:
+- Confirm Docker is running.
+- Confirm GITHUB_PAT is set.
+- Confirm ~/.codex/config.toml syntax.
+- Confirm your token has Contents, Issues, and Pull request permissions.
+
+
+PART 23 - Install Claude Code
+
+Install Claude Code using Anthropic's current install instructions.
+
+Typical setup:
+
+npm install -g @anthropic-ai/claude-code
+
+Then authenticate:
+
+claude
+
+Confirm it works:
+claude --version
+
+
+PART 24 - Confirm Claude Code reads CLAUDE.md
+
+From inside the repo:
+
+cd ~/Developer/cyber-labs
+claude
+
+Prompt Claude Code:
+
+Read CLAUDE.md and summarize the repo rules in 10 bullets.
+
+Expected result:
+Claude Code should mention:
+- No live device modification
+- Review and refine lab docs
+- Use the standard lab structure
+- Use agent-handoff
+- Do not store secrets
+
+
+PART 25 - Add GitHub MCP to Claude Code
+
+Use the official GitHub remote MCP server through Claude Code.
+
+From inside the repo:
+
+claude mcp add --transport http github https://api.githubcopilot.com/mcp/ \
+  --header "Authorization: Bearer $GITHUB_PAT"
+
+If you want it project-scoped instead of user-scoped, use:
+
+claude mcp add --transport http --scope project github https://api.githubcopilot.com/mcp/ \
+  --header "Authorization: Bearer $GITHUB_PAT"
+
+Important:
+- User-scoped config is private to your machine.
+- Project-scoped config may create or update .mcp.json in the repo.
+- Do not commit real tokens into .mcp.json.
+- Prefer environment variables for secrets.
+
+
+PART 26 - Verify Claude Code MCP
+
+Run:
+
+claude mcp list
+
+Then open Claude Code in the repo:
+
+claude
+
+Inside Claude Code, run:
+
+/mcp
+
+Confirm GitHub is listed and authenticated.
+
+Then test:
+
+Using GitHub MCP, list open issues in this repo.
+
+Then test a safe write:
+
+Create a GitHub issue titled "Review lab template completeness" with a checklist for confirming every template file is useful.
+
+
+PART 27 - Optional project-level .mcp.json for Claude Code
+
+Only do this if you want the repo to advertise required MCP servers.
+
+Create .mcp.json:
+
+nano .mcp.json
+
+Paste this template:
+
+{
+  "mcpServers": {
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_PAT}"
+      }
+    }
+  }
+}
+
+Important:
+- Confirm your Claude Code version supports headers and environment expansion in project .mcp.json.
+- If it does not, use claude mcp add instead.
+- Never hard-code your token into .mcp.json.
+- If .mcp.json includes no secrets, it can be committed.
+- If your local version stores secrets in it, do not commit it.
+
+Check before committing:
+cat .mcp.json
+
+If no real token is shown:
+git add .mcp.json
+git commit -m "Add Claude project MCP config"
+git push
+
+
+PART 28 - Make Codex and Claude Code coordinate through files
+
+Use these two files:
+
+agent-handoff/codex-to-claude.md
+agent-handoff/claude-to-codex.md
+
+Codex writes notes for Claude here:
+agent-handoff/codex-to-claude.md
+
+Claude writes notes for Codex here:
+agent-handoff/claude-to-codex.md
+
+Example Codex handoff:
+
+# Codex to Claude
+
+## Current task
+
+Created lab 002 service enumeration.
+
+## Files changed
+
+- labs/002-service-enumeration/README.md
+- labs/002-service-enumeration/instructions.md
+- labs/002-service-enumeration/expected-output.md
+
+## Requested review
+
+Please check:
+- Commands are correct
+- Expected outputs are realistic
+- Cleanup is sufficient
+- SOC angle is clear
+
+Example Claude handoff:
+
+# Claude to Codex
+
+## Review result
+
+Lab 002 is mostly complete.
+
+## Required changes
+
+- Add UDP scan warning
+- Add expected nmap service output
+- Add note about scanning only owned lab IPs
+- Add cleanup step for stopping test services
+
+
+PART 29 - Make them coordinate through GitHub issues
+
+Create one issue per lab.
+
+Issue title format:
+Lab 002 - Service Enumeration
+
+Issue body format:
+
+## Goal
+
+Build the service enumeration lab.
+
+## Required files
+
+- README.md
+- objectives.md
+- hardware.md
+- topology.md
+- setup.md
+- instructions.md
+- expected-output.md
+- results.md
+- cleanup.md
+- lessons-learned.md
+
+## Agent assignments
+
+Codex:
+- Create first draft
+- Create configs
+- Open PR
+
+Claude Code:
+- Review PR
+- Improve clarity
+- Check expected outputs
+- Add troubleshooting notes
+
+## Acceptance criteria
+
+- Lab can be reproduced from repo files
+- No secrets are committed
+- Commands are scoped to lab IPs
+- Expected outputs are included
+- Cleanup steps are included
+
+
+PART 30 - Use branches so agents do not collide
+
+Recommended branch naming:
+
+Codex branches:
+codex/lab-002-service-enumeration
+
+Claude branches:
+claude/review-lab-002-service-enumeration
+
+Rules:
+- One agent per branch
+- No direct pushes to main
+- All changes go through pull requests
+- The other agent reviews through PR comments or a follow-up branch
+
+
+PART 31 - Recommended agent workflow
+
+For creating a new lab:
+
+1. You create a GitHub issue:
+Lab 002 - Service Enumeration
+
+2. Ask Codex:
+Create lab 002 from templates/lab-template. Use the issue requirements. Create a branch, commit the files, and open a PR. Do not modify live systems.
+
+3. Ask Claude Code:
+Review the PR for lab 002. Check reproducibility, command accuracy, safety boundaries, expected outputs, cleanup, and learning objectives. Leave PR comments or push a review branch.
+
+4. Ask Codex:
+Apply Claude's review comments and update the PR.
+
+5. You review the PR.
+
+6. You merge to main.
+
+7. You run the lab locally.
+
+8. You save outputs into the lab results folder.
+
+9. Ask either agent:
+Add these results to lab 002, update results.md, and open a PR.
+
+
+PART 32 - Result file workflow
+
+After running a lab, save files here:
+
+labs/002-service-enumeration/results/
+  scan-output.txt
+  notes.txt
+  screenshots/
+  logs/
+
+Example:
+
+mkdir -p labs/002-service-enumeration/results/logs
+mkdir -p labs/002-service-enumeration/results/screenshots
+
+Save nmap output:
+nmap -sV 192.168.50.10 -oN labs/002-service-enumeration/results/scan-output.txt
+
+Then commit:
+
+git checkout -b results/lab-002-first-run
+git add labs/002-service-enumeration/results labs/002-service-enumeration/results.md
+git commit -m "Add first run results for lab 002"
+git push -u origin results/lab-002-first-run
+
+Then ask an agent:
+Open a PR summarizing these lab results and update results.md with the main findings.
+
+
+PART 33 - Add a pull request template
+
+Create:
+nano .github/pull_request_template.md
+
+Paste:
+
+# Pull Request
+
+## Summary
+
+Describe what changed.
+
+## Lab affected
+
+Example:
+labs/002-service-enumeration
+
+## Type of change
+
+- [ ] New lab
+- [ ] Lab update
+- [ ] Results upload
+- [ ] Config update
+- [ ] Detection update
+- [ ] Documentation cleanup
+
+## Safety check
+
+- [ ] No real secrets committed
+- [ ] No live systems modified by the agent
+- [ ] Commands are scoped to owned lab systems
+- [ ] Cleanup steps are included
+
+## Reproducibility check
+
+- [ ] Hardware required is listed
+- [ ] Network topology is listed
+- [ ] Setup steps are complete
+- [ ] Expected outputs are included
+- [ ] Results location is documented
+
+
+PART 34 - Add GitHub issue templates
+
+Create:
+nano .github/ISSUE_TEMPLATE/new-lab.md
+
+Paste:
+
+---
+name: New Lab
+about: Plan a new cyber lab
+title: "Lab XXX - "
+labels: lab
+assignees: ""
+---
+
+## Goal
+
+## Difficulty
+
+## Required hardware
+
+## Required files
+
+- [ ] README.md
+- [ ] objectives.md
+- [ ] hardware.md
+- [ ] topology.md
+- [ ] setup.md
+- [ ] instructions.md
+- [ ] expected-output.md
+- [ ] results.md
+- [ ] cleanup.md
+- [ ] lessons-learned.md
+
+## Agent assignment
+
+Codex:
+
+Claude Code:
+
+## Acceptance criteria
+
+- [ ] Lab can be reproduced from committed files
+- [ ] No secrets are committed
+- [ ] Expected outputs are documented
+- [ ] Cleanup steps are documented
+- [ ] Safety boundaries are clear
+
+
+PART 35 - Commit repo management files
+
+Run:
+
+git add .
+git commit -m "Add agent instructions and lab templates"
+git push origin main
+
+
+PART 36 - First real agent task for Codex
+
+Prompt Codex from inside the repo:
+
+Create a new branch named codex/lab-002-service-enumeration. Create labs/002-service-enumeration by copying templates/lab-template. Fill out the lab for basic service enumeration against an owned Linux target at 192.168.50.10 from Kali. Include nmap commands, expected outputs, cleanup, and what to learn. Do not modify live systems. Commit the files and open a PR.
+
+
+PART 37 - First real agent task for Claude Code
+
+Prompt Claude Code from inside the repo:
+
+Review the open PR for lab 002. Check whether the lab is reproducible, safe, and complete. Verify the nmap commands make sense for a beginner. Add comments or create a review branch with improvements. Do not modify live systems.
+
+
+PART 38 - How to make them "talk"
+
+Use this loop:
+
+1. Codex opens PR.
+2. Claude reviews PR.
+3. Claude writes comments or updates agent-handoff/claude-to-codex.md.
+4. Codex reads comments and handoff file.
+5. Codex updates PR.
+6. You merge.
+
+The agents are not directly chatting.
+
+They are coordinating through:
+- GitHub issues
+- GitHub PRs
+- PR comments
+- agent-handoff files
+- committed templates
+- AGENTS.md
+- CLAUDE.md
+
+
+PART 39 - Security rules for MCP
+
+Use least privilege:
+- Give GitHub token access only to the cyber-labs repo.
+- Give only the permissions needed.
+- Do not enable broad org access.
+- Do not commit tokens.
+- Prefer private repo.
+- Review PR diffs before merging.
+- Avoid random MCP servers.
+- Use official GitHub MCP server where possible.
+- Do not combine untrusted MCP servers with filesystem or shell access unless you understand the risk.
+
+
+PART 40 - Recommended final setup
+
+Your final system should look like this:
+
+cyber-labs GitHub repo
+  AGENTS.md
+  CLAUDE.md
+  .mcp.json optional
+  templates/
+  labs/
+  shared/
+  scripts/
+  detections/
+  diagrams/
+  agent-handoff/
+
+Codex
+  Reads AGENTS.md
+  Uses GitHub MCP
+  Creates lab drafts
+  Opens PRs
+
+Claude Code
+  Reads CLAUDE.md
+  Uses GitHub MCP
+  Reviews and improves lab drafts
+  Adds PR comments or review branches
+
+You
+  Approve plans
+  Run labs locally
+  Upload real outputs
+  Review and merge PRs
+
+
+PART 41 - Troubleshooting
+
+Problem:
+Codex does not see GitHub tools.
+
+Fix:
+- Confirm Docker is running.
+- Confirm GITHUB_PAT is set.
+- Confirm ~/.codex/config.toml exists.
+- Confirm token has repo permissions.
+- Restart Codex.
+
+Problem:
+Claude Code does not see GitHub MCP.
+
+Fix:
+- Run claude mcp list.
+- Run /mcp inside Claude Code.
+- Re-add the server with claude mcp add.
+- Confirm GITHUB_PAT is set.
+- Confirm your token has Contents, Issues, and Pull request permissions.
+
+Problem:
+Agent wants to change live machines.
+
+Fix:
+- Stop it.
+- Update AGENTS.md and CLAUDE.md.
+- Repeat: repo-only work unless explicitly authorized.
+
+Problem:
+Agents overwrite each other.
+
+Fix:
+- One issue per lab.
+- One branch per agent.
+- No direct commits to main.
+- Use PR review flow.
+
+Problem:
+Secrets got committed.
+
+Fix:
+- Rotate the token immediately.
+- Remove the secret from the repo.
+- Add .gitignore rules if needed.
+- Consider GitHub secret scanning.
+- Do not reuse that token.
+
+
+PART 42 - What to do next
+
+After this setup is complete, build labs in this order:
+
+001-network-discovery
+002-service-enumeration
+003-basic-linux-logging
+004-ssh-authentication-lab
+005-wazuh-basic-ingestion
+006-wazuh-detect-ssh-failures
+007-dvwa-basic-web-attacks
+008-windows-sysmon-baseline
+009-active-directory-basics
+010-full-attack-and-detection-chain
