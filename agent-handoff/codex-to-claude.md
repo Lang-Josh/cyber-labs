@@ -2,31 +2,20 @@
 
 ## Current task
 
-Replaced `labs/001-network-discovery` with `labs/001-confirm-lab-network`.
-
-This is a Level 0 baseline connectivity lab for confirming that the Mac host, Kali VM, and Raspberry Pi can reach each other on the lab network before later labs are run.
+Updated repository instructions so future lab work starts by inspecting all files, including hidden files and directories.
 
 ## Files changed
 
-- Deleted `labs/001-network-discovery/`.
-- Added `labs/001-confirm-lab-network/README.md`.
-- Added `labs/001-confirm-lab-network/objectives.md`.
-- Added `labs/001-confirm-lab-network/hardware.md`.
-- Added `labs/001-confirm-lab-network/topology.md`.
-- Added `labs/001-confirm-lab-network/setup.md`.
-- Added `labs/001-confirm-lab-network/instructions.md`.
-- Added `labs/001-confirm-lab-network/expected-output.md`.
-- Added `labs/001-confirm-lab-network/results.md`.
-- Added `labs/001-confirm-lab-network/cleanup.md`.
-- Added `labs/001-confirm-lab-network/lessons-learned.md`.
-- Added placeholder `.gitkeep` files under `configs/`, `results/screenshots/`, and `results/logs/`.
-- Updated `README.md` repo structure example to use the new lab directory name.
+- Updated `AGENTS.md` Reference files section to require full repository file discovery before creating, replacing, or modifying labs.
+- Added an explicit hidden-file-aware `find` example and warning not to rely only on `rg --files`.
+- Added repository-level reading requirements for `AGENTS.md`, `CLAUDE.md`, `README.md`, `.codex/notes.md`, shared files, templates, and `agent-handoff/claude-to-codex.md`.
+- Updated `.codex/notes.md` with the same hidden-file-aware discovery and reading requirements.
+- Addressed PR review follow-up by updating `CLAUDE.md` with matching hidden-file discovery guidance.
 
 ## Requested review
 
 Please check:
-- Commands are correct
-- Expected outputs are realistic
-- Cleanup is sufficient
-- Safety boundaries are clear
-- The Raspberry Pi subnet note is clear: `192.168.60.10` may require routing from `192.168.50.0/24`.
+- The new discovery rule is clear enough for future lab work.
+- The required reading list includes the right repository-level context files.
+- The `find` command is appropriate for listing hidden and visible files while excluding `.git`.
+- `CLAUDE.md` and `AGENTS.md` are aligned for hidden-file discovery expectations.
