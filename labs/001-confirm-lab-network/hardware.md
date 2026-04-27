@@ -8,7 +8,9 @@ The available devices come from `shared/hardware-inventory.md`.
 | --- | --- | --- | --- |
 | Mac running macOS | Admin workstation and Kali host | `192.168.50.20` | Used to manage the lab and host the Kali VM |
 | Kali Linux VM on Mac | Attacker | `192.168.50.10` | Primary system for later lab commands |
-| Raspberry Pi 5 8GB | Linux target | `192.168.60.10` | Owned lab target |
+| Raspberry Pi 5 8GB | Linux target | `192.168.60.10` | Owned lab target — direct console access via keyboard and monitor |
+| Monitor | Raspberry Pi display | N/A | Connected directly to Raspberry Pi |
+| Keyboard | Raspberry Pi input | N/A | Connected directly to Raspberry Pi |
 | Ethernet switch | Lab network switching | N/A | Connects physical lab devices |
 | Ethernet cables | Network links | N/A | Connect Mac, Raspberry Pi, and switch as needed |
 
