@@ -67,7 +67,7 @@ A personal cybersecurity lab knowledge base built and maintained by a three-enti
           │    (11 files)                 │
           │                               │
           │  labs/                        │
-          │    001-network-discovery/     │
+          │    001-confirm-lab-network/   │
           │    002-service-enumeration/   │
           │    003-.../                   │
           │                               │
