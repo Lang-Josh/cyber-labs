@@ -1,6 +1,6 @@
 # Cyber Labs
 
-A personal cybersecurity lab knowledge base built and maintained by a three-entity team: you, Codex, and Claude Code. Labs are reproducible, structured, and tied directly to certification exam topics.
+A personal cybersecurity lab knowledge base built and maintained by a three-entity team: Myself, Codex, and Claude Code. Labs are reproducible, structured, and tied directly to the Cisco CBROPS 200-201 certification exam topics.
 
 ---
 
