@@ -50,13 +50,28 @@ labs/000-lab-name/
 
 ## Reference files
 
-Before creating or reviewing any lab, read these files from the repo:
+Before creating, replacing, modifying, or reviewing any lab, inspect the full repository file list, including hidden files and directories.
 
+Use a command that includes hidden paths and excludes Git internals, such as:
+
+```bash
+find . -path ./.git -prune -o -type f -print
+```
+
+Then read repository-level instruction and context files that may affect the task, including hidden files. Do not rely only on `rg --files`, because it can omit hidden files depending on ignore rules and configuration.
+
+At minimum, read these files from the repo:
+
+- AGENTS.md — Codex role, rules, and lab structure requirements
+- CLAUDE.md — Claude Code role, rules, and coordination expectations
+- README.md — repository overview and structure
+- .codex/notes.md — Codex-specific repository notes and lab context
 - shared/ip-plan.md — lab IP addresses and network layout for all devices
 - shared/hardware-inventory.md — available physical and virtual hardware and their roles
 - shared/common-commands.md — standard commands used across labs
 - shared/credentials.example.md — placeholder credential format, never store real secrets
 - templates/lab-template/ — the required structure every lab must follow
+- agent-handoff/codex-to-claude.md — current instructions from Codex
 
 ## Agent coordination
 
