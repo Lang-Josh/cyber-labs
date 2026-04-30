@@ -13,5 +13,6 @@ By the end of this lab, you should be able to:
 
 - The Kali VM is using `192.168.50.10`.
 - The Mac host is reachable at `192.168.50.20`.
-- The Raspberry Pi is reachable at `192.168.60.10`, or the routing gap is documented clearly.
+- The Raspberry Pi is using `192.168.60.10`.
+- The Raspberry Pi is reachable from Kali, or the missing route between static subnets is documented clearly.
 - `results.md` contains actual command results and next actions.

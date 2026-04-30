@@ -10,25 +10,28 @@ Confirm that the Mac, Kali VM, and Raspberry Pi can reach each other on the lab 
 
 ## Lab summary
 
-This lab verifies basic network connectivity between the admin workstation, attacker VM, and Linux target. You will confirm each device's IP address, send ICMP echo requests with `ping`, inspect neighbor entries with `arp`, and record the results.
+This lab verifies basic network connectivity between the admin workstation, attacker VM, and Linux target after static IP addresses have been assigned from the repo IP plan. You will confirm each device's IP address, send ICMP echo requests with `ping`, inspect neighbor entries with `arp`, and record the results.
 
-This lab does not require logging into third-party systems, changing device configuration, scanning public networks, or modifying live lab machines.
+This lab does not require logging into third-party systems, scanning public networks, or modifying non-lab machines. Static IP assignment is a prerequisite on owned lab devices and is documented under `configs/`.
 
 ## Tools used
 
 - `ip addr`
+- `ip route`
 - `ping`
 - `arp`
 
 ## Lab IPs
 
-The expected IP addresses come from `shared/ip-plan.md`.
+The expected IP addresses come from `shared/ip-plan.md`. Lab 001 should not be marked complete until these static addresses are observed.
 
 | Device | Role | Expected IP |
 | --- | --- | --- |
 | Kali VM | Attacker | `192.168.50.10` |
 | Mac host | Admin workstation | `192.168.50.20` |
 | Raspberry Pi 1 | Linux target | `192.168.60.10` |
+
+Static IP configuration examples are stored in `configs/`.
 
 ## Files in this lab
 

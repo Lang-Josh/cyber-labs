@@ -4,18 +4,32 @@
 
 Run these commands only on the Mac, Kali VM, and Raspberry Pi that belong to this lab. Do not test public IP addresses, third-party networks, or production systems.
 
+## Task 0: Confirm static IP assignment is complete
+
+Before starting the reachability checks, confirm the static IP examples in `configs/` have been applied to the owned lab devices:
+
+- Mac host: `192.168.50.20`
+- Kali VM: `192.168.50.10`
+- Raspberry Pi: `192.168.60.10`
+
+Expected behavior:
+Each device shows the static IP assigned in `shared/ip-plan.md`.
+
+If any device still has a DHCP address or an unexpected subnet, stop and fix the static IP assignment before continuing. Record the mismatch in `results.md`.
+
 ## Task 1: Confirm the Kali VM IP address
 
 Run this on Kali:
 
 ```bash
 ip addr
+ip route
 ```
 
 Expected behavior:
-Kali shows an active network interface with `inet 192.168.50.10/24`. The interface name may be `eth0`, `ens33`, `enp0s3`, or another Linux interface name.
+Kali shows an active network interface with `inet 192.168.50.10/24`. The route table uses `192.168.50.1` when the lab router is available. The interface name may be `eth0`, `ens33`, `enp0s3`, or another Linux interface name.
 
-Record the interface name and IP address in `results.md`.
+Record the interface name, IP address, and gateway in `results.md`.
 
 ## Task 2: Confirm Kali can reach the Mac
 
@@ -39,7 +53,7 @@ ping -c 4 192.168.60.10
 ```
 
 Expected behavior:
-If routing between the lab subnets is configured, Kali receives replies from the Raspberry Pi.
+If routing between the static lab subnets is configured, Kali receives replies from the Raspberry Pi.
 
 If the command shows `Destination Host Unreachable`, `Network is unreachable`, or `100% packet loss`, record the exact result. Because the Raspberry Pi IP is reserved in `192.168.60.0/24`, failure is expected when no router connects the `192.168.50.0/24` and `192.168.60.0/24` networks.
 
@@ -105,13 +119,14 @@ Run these on the Raspberry Pi:
 
 ```bash
 ip addr
+ip route
 arp -n
 ```
 
 Expected behavior:
-The Raspberry Pi shows `inet 192.168.60.10/24` on its active interface. The ARP table may show a router or gateway entry if traffic crosses subnets.
+The Raspberry Pi shows `inet 192.168.60.10/24` on its active interface. The route table uses `192.168.60.1` when the lab router is available. The ARP table may show a router or gateway entry if traffic crosses subnets.
 
-Record the active interface name, IP address, and any relevant ARP entries in `results.md`.
+Record the active interface name, IP address, gateway, and any relevant ARP entries in `results.md`.
 
 ## Task 9: Summarize pass or fail
 

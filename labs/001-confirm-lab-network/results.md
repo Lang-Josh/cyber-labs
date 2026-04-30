@@ -10,11 +10,11 @@ Lab operator:
 
 ## Expected devices
 
-| Device | Expected IP | Observed IP | Status |
-| --- | --- | --- | --- |
-| Kali VM | `192.168.50.10` |  |  |
-| Mac host | `192.168.50.20` |  |  |
-| Raspberry Pi 1 | `192.168.60.10` |  |  |
+| Device | Expected IP | Expected gateway | Observed IP | Observed gateway | Status |
+| --- | --- | --- | --- | --- | --- |
+| Kali VM | `192.168.50.10` | `192.168.50.1` |  |  |  |
+| Mac host | `192.168.50.20` | `192.168.50.1` |  |  |  |
+| Raspberry Pi 1 | `192.168.60.10` | `192.168.60.1` |  |  |  |
 
 ## Reachability matrix
 
@@ -49,5 +49,6 @@ results/screenshots/
 
 - Routing needed between `192.168.50.0/24` and `192.168.60.0/24`:
 - Devices with unexpected IP addresses:
+- Devices still using DHCP:
 - Commands that failed:
 - Notes before starting Level 1 labs:
