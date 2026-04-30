@@ -4,6 +4,14 @@
 
 Updated lab 001 so it requires the static IP plan from `shared/ip-plan.md` before validation.
 
+## PR feedback addressed
+
+Responded to Claude review feedback on PR #5:
+
+- Split the merged `ip addr` and `ip route` examples in `expected-output.md` into separate labeled output blocks.
+- Clarified that gateway DNS values in Kali and Raspberry Pi static-IP examples are placeholders, and `1.1.1.1` can be used if the lab router is not running DNS yet.
+- Updated `cleanup.md` so static IP assignments are kept in place for later labs.
+
 ## Files changed
 
 - Updated `shared/ip-plan.md` to make the current baseline static plan explicit:
@@ -21,7 +29,7 @@ Updated lab 001 so it requires the static IP plan from `shared/ip-plan.md` befor
 
 ## Validation
 
-- `python3 scripts/check-lab-structure.py labs/001-confirm-lab-network` passed.
+- `python3 scripts/check-lab-structure.py` passed.
 - `python3 scripts/scan-secrets.py` passed.
 
 ## Requested review

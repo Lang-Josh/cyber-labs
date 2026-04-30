@@ -9,7 +9,7 @@ Use this as a checklist for assigning the Raspberry Pi address from `shared/ip-p
 | IP address | `192.168.60.10` |
 | Prefix | `/24` |
 | Gateway | `192.168.60.1` |
-| DNS | `192.168.60.1`, or a lab-approved DNS resolver |
+| DNS | `192.168.60.1` placeholder; use `1.1.1.1` if the lab router is not yet running a resolver |
 
 ## NetworkManager example
 

@@ -9,7 +9,7 @@ Use this as a checklist for assigning the Kali address from `shared/ip-plan.md`.
 | IP address | `192.168.50.10` |
 | Prefix | `/24` |
 | Gateway | `192.168.50.1` |
-| DNS | `192.168.50.1`, or a lab-approved DNS resolver |
+| DNS | `192.168.50.1` placeholder; use `1.1.1.1` if the lab router is not yet running a resolver |
 
 ## NetworkManager example
 
