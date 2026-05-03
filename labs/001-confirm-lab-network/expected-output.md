@@ -8,13 +8,22 @@ Command:
 
 ```bash
 ip addr
+ip route
 ```
 
 Expected example:
 
+`ip addr` example:
+
 ```text
 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500
     inet 192.168.50.10/24 brd 192.168.50.255 scope global eth0
+```
+
+`ip route` example:
+
+```text
+default via 192.168.50.1 dev eth0 proto static metric 100
 ```
 
 ## Kali to Mac ping
@@ -140,13 +149,22 @@ Command:
 
 ```bash
 ip addr
+ip route
 ```
 
 Expected example:
 
+`ip addr` example:
+
 ```text
 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500
     inet 192.168.60.10/24 brd 192.168.60.255 scope global eth0
+```
+
+`ip route` example:
+
+```text
+default via 192.168.60.1 dev eth0 proto static metric 100
 ```
 
 ## Raspberry Pi to Kali ping

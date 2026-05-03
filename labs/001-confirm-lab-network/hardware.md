@@ -24,4 +24,5 @@ The available devices come from `shared/hardware-inventory.md`.
 
 - Use only owned lab devices.
 - Do not SSH into devices during this lab unless a separate instruction explicitly allows it.
-- Do not change IP addresses, firewall rules, router settings, or switch settings as part of this lab.
+- Assign static IP addresses before running the validation tasks.
+- Do not change firewall rules, router settings, or switch settings as part of this lab.

@@ -1,10 +1,13 @@
 # IP Plan
 
-## Current simple lab
+## Current baseline static plan
 
-| Network | Purpose | CIDR |
-|---|---|---|
-| Lab network | Basic sandbox | 192.168.50.0/24 |
+| Network | Purpose | CIDR | Gateway |
+|---|---|---|---|
+| Attacker/Admin | Mac and Kali baseline network | 192.168.50.0/24 | 192.168.50.1 |
+| Target | Raspberry Pi baseline target network | 192.168.60.0/24 | 192.168.60.1 |
+
+The Raspberry Pi target is assigned a static address in `192.168.60.0/24`. Routing between `192.168.50.0/24` and `192.168.60.0/24` is required before cross-subnet reachability checks can pass.
 
 ## Future segmented lab
 
